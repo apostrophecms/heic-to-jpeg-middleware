@@ -1,0 +1,27 @@
+{
+  "name": "heic-to-jpeg-middleware",
+  "version": "1.0.0",
+  "description": "Middleware to convert HEIC/HEIF files from iOS 11 devices like the iPhone to JPEG format, with no other modifications to your code that expects JPEG",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/boutell/heic-to-jpeg-middleware.git"
+  },
+  "keywords": [
+    "middleware",
+    "heic",
+    "heif"
+  ],
+  "author": "Thomas Boutell",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/boutell/heic-to-jpeg-middleware/issues"
+  },
+  "homepage": "https://github.com/boutell/heic-to-jpeg-middleware#readme",
+  "dependencies": {
+    "shell-escape": "^0.2.0"
+  }
+}
