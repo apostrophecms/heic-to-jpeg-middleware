@@ -33,7 +33,16 @@ that didn't come from iOS 11. This is not a bug in the middleware.
 
 The very latest versions of ImageMagick support HEIF too.
 
+## Warnings
+
+To prevent a denial of service, middleware that does CPU- and RAM-intensive
+stuff like this should always be added only to the specific routes that 
+require it. It's also a good idea to use other middleware to check the user's
+permissions first, rather than later in the route code itself.
+
 ## Changelog
+
+1.0.1: more docs, repo push.
 
 1.0.0: initial release.
 
