@@ -1,6 +1,6 @@
 ```javascript
 const multipart = require('connect-multiparty')();
-const heicToJpeg = require('heic-to-jpeg')(tifig: '/opt/tifig');
+const heicToJpeg = require('heic-to-jpeg-middleware')({tifig: '/opt/tifig'});
 const app = require('express')();
 app.post('/upload', multipart, heicToJpeg, function(req, res) {
   // Access req.files as you normally would here.
