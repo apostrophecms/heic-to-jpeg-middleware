@@ -1,6 +1,6 @@
 {
   "name": "heic-to-jpeg-middleware",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Middleware to convert HEIC/HEIF files from iOS 11 devices like the iPhone to JPEG format, with no other modifications to your code that expects JPEG",
   "main": "index.js",
   "scripts": {

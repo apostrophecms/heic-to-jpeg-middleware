@@ -17,7 +17,8 @@ original file.
 This middleware expects that the file upload has already been
 accepted via `connect-multiparty` or any other middleware that
 provides a `req.files` object in which each sub-object has
-`path`, `name` and `type` properties.
+`path`, `name` and `type` properties. The sub-objects of
+`req.files` may also be arrays of such objects.
 
 [Requires the "tifig" command line utility. Install
 that first.](https://github.com/monostream/tifig) You may specify its
@@ -41,6 +42,8 @@ require it. It's also a good idea to use other middleware to check the user's
 permissions first, rather than later in the route code itself.
 
 ## Changelog
+
+1.0.2: supports more types of file upload middleware. In particular, the sub-objects of `req.files` may be arrays, and if `path` does not have any extension to change then a `.jpg` extension is added.
 
 1.0.1: more docs, repo push.
 

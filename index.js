@@ -13,11 +13,24 @@ module.exports = function(options) {
     if (!req.files) {
       return next();
     }
-    const relevant = Object.keys(req.files).filter(key => types[req.files[key].type] || req.files[key].name.match(/\.(heic|heif)$/));
-    Promise.all(relevant.map(key => {
-      const file = req.files[key];
+    const relevant = [];
+    Object.keys(req.files).forEach(function(name) {
+      var files = req.files[name];
+      if (!Array.isArray(files)) {
+        files = [ files ];
+      }
+      files.forEach(function(file) {
+        if (types[file.type] || file.name.toLowerCase().match(/\.(heic|heif)$/)) {
+          relevant.push(file);
+        }
+      });
+    });
+    Promise.all(relevant.map(file => {
       const newName = file.name.replace(/\.[^\.]+$/, '.jpg');
-      const newPath = file.path.replace(/\.[^\.]+$/, '.jpg');
+      let newPath = file.path.replace(/\.[^\.]+$/, '.jpg');
+      if (!newPath.match(/\.jpg$/)) {
+        newPath += '.jpg';
+      }
       const newType = 'image/jpeg';
       return new Promise((resolve, reject) => {
         require('child_process').exec(se([ options.tifig, file.path, newPath ]), { encoding: 'utf8' }, function(error, stdout, stderr) {
