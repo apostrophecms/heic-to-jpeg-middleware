@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/boutell/heic-to-jpeg-middleware#readme",
   "dependencies": {
+    "heic-convert": "^1.2.2",
     "shell-escape": "^0.2.0"
   }
 }
