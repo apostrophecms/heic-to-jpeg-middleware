@@ -3,7 +3,6 @@ const cp = require('child_process');
 
 module.exports = function(options) {
   options = options || {};
-  options.tifig = options.tifig || 'tifig';
   const types = {
     'image/heif': 1,
     'image/heic': 1,
