@@ -1,13 +1,13 @@
-const se = require('shell-escape');
+const fs = require('fs');
+const cp = require('child_process');
 
 module.exports = function(options) {
   options = options || {};
-  options.tifig = options.tifig || 'tifig';
   const types = {
     'image/heif': 1,
     'image/heic': 1,
     'image/heif-sequence': 1,
-    'image/heic-sequence': 1  
+    'image/heic-sequence': 1
   };
   return function(req, res, next) {
     if (!req.files) {
@@ -25,6 +25,7 @@ module.exports = function(options) {
         }
       });
     });
+    const worker = cp.fork(`${__dirname}/worker.js`);
     Promise.all(relevant.map(file => {
       const newName = file.name.replace(/\.[^\.]+$/, '.jpg');
       let newPath = file.path.replace(/\.[^\.]+$/, '.jpg');
@@ -33,25 +34,29 @@ module.exports = function(options) {
       }
       const newType = 'image/jpeg';
       return new Promise((resolve, reject) => {
-        require('child_process').exec(se([ options.tifig, file.path, newPath ]), { encoding: 'utf8' }, function(error, stdout, stderr) {
-          if (error) {
-            console.log(stdout);
-            console.error(stderr);
-            return reject(error);
-          }
-          file.name = newName;
-          // Avoid leaking many megabytes of disk space
-          require('fs').unlinkSync(file.path);
-          file.path = newPath;
-          file.type = newType;
-          return resolve(true);
+        const errorHandler = (error) => {
+            console.error(error);
+            reject(error);
+        };
+        worker.once('message', (_message) => {
+            file.name = newName;
+            // Avoid leaking many megabytes of disk space
+            fs.unlinkSync(file.path);
+            file.path = newPath;
+            file.type = newType;
+            // Avoid listener collision
+            worker.removeListener('error', errorHandler);
+            resolve(true);
         });
+        worker.once('error', errorHandler);
+        worker.send({ inputPath: file.path, outputPath: newPath });
       });
     })).then(o => {
+      // Gracefully kill the child process
+      worker.send({ exit: true });
       return next();
     }).catch(e => {
       res.status(500).send('error');
     });
   }
 };
-
