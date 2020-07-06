@@ -1,6 +1,6 @@
 ```javascript
 const multipart = require('connect-multiparty')();
-const heicToJpeg = require('heic-to-jpeg')();
+const heicToJpeg = require('heic-to-jpeg-middleware')();
 const app = require('express')();
 app.post('/upload', multipart, heicToJpeg, function(req, res) {
   // Access req.files as you normally would here.
@@ -10,7 +10,7 @@ app.post('/upload', multipart, heicToJpeg, function(req, res) {
 });
 ```
 
-This is middleware to convert the new iOS 11 HEIC/HEIF format to JPEG,
+This is middleware to convert the iOS HEIC/HEIF image format to JPEG,
 so that your Express route sees the JPEG as if it were the
 original file.
 
@@ -33,7 +33,7 @@ permissions first, rather than later in the route code itself.
 
 ## Changelog
 
-2.0.0: Use [heic-convert](https://github.com/catdad-experiments/heic-convert) in replacement of [tifig](https://github.com/monostream/tifig).
+2.0.0: Use [heic-convert](https://github.com/catdad-experiments/heic-convert) in replacement of [tifig](https://github.com/monostream/tifig). Since `heic-convert` is pure JavaScript there is no more need to install a hand-compiled dependency that is not well-supported. Many thanks to Also fixed an error in the documentation; thanks to Vũ Quang Thịnh for pointing this out.
 
 1.0.2: supports more types of file upload middleware. In particular, the sub-objects of `req.files` may be arrays, and if `path` does not have any extension to change then a `.jpg` extension is added.
 
