@@ -33,7 +33,7 @@ permissions first, rather than later in the route code itself.
 
 ## Changelog
 
-2.0.0: Use [heic-convert](https://github.com/catdad-experiments/heic-convert) in replacement of [tifig](https://github.com/monostream/tifig). Since `heic-convert` is pure JavaScript there is no more need to install a hand-compiled dependency that is not well-supported. Many thanks to Also fixed an error in the documentation; thanks to Vũ Quang Thịnh for pointing this out.
+2.0.0: Use [heic-convert](https://github.com/catdad-experiments/heic-convert) in replacement of [tifig](https://github.com/monostream/tifig). Since `heic-convert` is pure JavaScript there is no more need to install a hand-compiled dependency that is not well-supported. Thanks to Gabriel L. Maljkovich for this contribution. Also fixed an error in the documentation; thanks to Vũ Quang Thịnh for pointing this out.
 
 1.0.2: supports more types of file upload middleware. In particular, the sub-objects of `req.files` may be arrays, and if `path` does not have any extension to change then a `.jpg` extension is added.
 
